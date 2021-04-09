@@ -3,74 +3,83 @@ import {
   fetchMovies,
   fetchBooks,
   asyncFetchBooks,
-  asyncFetchMovies
-} from "./services";
-const movies = require("./data/movies.json");
+  asyncFetchMovies,
+} from './services';
+const movies = require('./data/movies.json');
 
 const getBooksAndMovies = () => {
   return Promise.all([fetchBooks(), fetchMovies()])
     .then(([books, movies]) => ({
       books,
-      movies
+      movies,
     }))
-    .catch(error => console.log("Error fetching books and movies", error));
+    .catch((error) => console.log('Error fetching books and movies', error));
 };
 const getBooksAndMoviesPromise = getBooksAndMovies();
-getBooksAndMoviesPromise.then(results => {
-  console.log("getBooksAndMoviesPromise", results);
+getBooksAndMoviesPromise.then((results) => {
+  console.log('getBooksAndMoviesPromise', results);
 });
 
 function getBooksOrMovies() {
   return Promise.race([fetchBooks(), fetchMovies()])
-    .then(results => results)
-    .catch(error => {
-      console.log("Error waiting for the promise race", error);
+    .then((results) => results)
+    .catch((error) => {
+      console.log('Error waiting for the promise race', error);
     });
 }
 
 const getBooksOrMoviesPromise = getBooksOrMovies();
-getBooksOrMoviesPromise.then(results => {
-  console.log("getBooksOrMoviesPromise", results);
+getBooksOrMoviesPromise.then((results) => {
+  console.log('getBooksOrMoviesPromise', results);
 });
 
 async function getBooksAndMoviesAsync() {
   try {
     const [books, movies] = await Promise.all([
       asyncFetchBooks(),
-      asyncFetchMovies()
+      asyncFetchMovies(),
     ]);
     return {
       books,
-      movies
+      movies,
     };
   } catch (error) {
-    console.log("Error fetching books and movies", error);
+    console.log('Error fetching books and movies', error);
     return error;
   }
 }
 
 async function getBooksOrMoviesAsync() {
-  const values = await Promise.race([asyncFetchBookss(), asyncFetchMovies()]);
+  const values = await Promise.race([asyncFetchBooks(), asyncFetchMovies()]);
   return values;
 }
 
 getBooksAndMoviesAsync()
-  .then(results => {
-    console.log("movies AND books", {
+  .then((results) => {
+    console.log('movies AND books', {
       movies: results.movies,
-      books: results.books
+      books: results.books,
     });
   })
-  .catch(error => {
-    console.error("Error in getBooksAndMoviesAsync execution", error);
+  .catch((error) => {
+    console.error('Error in getBooksAndMoviesAsync execution', error);
   });
 
 getBooksOrMoviesAsync()
-  .then(results => {
-    console.log("movies OR books", {
-      results
+  .then((results) => {
+    console.log('movies OR books', {
+      results,
     });
   })
-  .catch(error =>
-    console.error("Error in getBooksOrMoviesAsync execution", error)
+  .catch((error) =>
+    console.error('Error in getBooksOrMoviesAsync execution', error)
   );
+
+const timer1 = setTimeout(() => {
+  console.log('timer 1 has finished');
+}, 3000);
+
+const timer2 = setTimeout(() => {
+  console.log('timer 2 has finished');
+  clearTimeout(timer1);
+}, 2000);

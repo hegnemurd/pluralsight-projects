@@ -1,5 +1,34 @@
 {
-  "prettier": {
-    "singleQuote": true
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "overrides": [
+    {
+      "files": ".prettierrc",
+      "options": {
+        "parser": "json"
+      }
+    }
+  ],
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "src/data",
+        "staticOutDir": "data"
+      }
+    ]
+  },
+  "dependencies": {
+    "babel": "^6.23.0",
+    "lodash": "^4.17.15"
   }
 }
